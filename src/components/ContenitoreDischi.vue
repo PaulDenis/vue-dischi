@@ -1,23 +1,26 @@
 <template>
     <section class="dischi">
-        <div class="container">
+        <div v-if="dischi.length > 0" class="container">
             <Disco
             v-for="disco in dischi"
             :key="disco.title"
             :item="disco"
             />
         </div>
+        <Loader v-else />
     </section>
 </template>
 
 <script>
 import axios from 'axios';
 import Disco from './Disco'
+import Loader from './Loader.vue'
 
 export default {
     name: 'ContenitoreDischi',
     components: {
-        Disco
+        Disco,
+        Loader
     },
     data: function() {
         return {
