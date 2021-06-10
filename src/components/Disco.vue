@@ -15,6 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    @import '../style/variables.scss';
 
     div {
         height: 350px;
@@ -32,6 +33,7 @@ export default {
             line-height: 24px;
             text-transform: uppercase;
             color: white;
+            font-family: $title-font;
 
         };
         .author, .date {

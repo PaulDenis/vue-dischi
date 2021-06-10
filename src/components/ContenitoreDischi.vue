@@ -1,8 +1,14 @@
 <template>
     <section class="dischi">
-        <div v-if="dischi.length > 0" class="container">
+        <SelectGenere
+        @SelectGenere="selezioneGenere"
+        :generi="dischi"
+        />
+        <div
+        v-if="dischi.length > 0"
+        class="container">
             <Disco
-            v-for="disco in dischi"
+            v-for="disco in generiFiltrati"
             :key="disco.title"
             :item="disco"
             />
@@ -13,19 +19,23 @@
 
 <script>
 import axios from 'axios';
-import Disco from './Disco'
-import Loader from './Loader.vue'
+import Disco from './Disco';
+import Loader from './Loader.vue';
+import SelectGenere from './SelectGenere.vue';
+
 
 export default {
     name: 'ContenitoreDischi',
     components: {
         Disco,
-        Loader
+        Loader,
+        SelectGenere
     },
     data: function() {
         return {
             apiUrl: 'https://flynn.boolean.careers/exercises/api/array/music',
-            dischi: []
+            dischi: [],
+            newGenere: ""
         };
     },
     created: function() {
@@ -41,18 +51,31 @@ export default {
             )
             .catch();
     },
-    mounted: function () {
-
-
+    computed: {
+        generiFiltrati: function() {
+            const newArray = this.dischi.filter(
+                (element) => {
+                    return element.genre.includes(this.newGenere);
+                }
+            );
+            // console.log(newArray);
+            return newArray;
+        }
+    },
+    methods: {
+        selezioneGenere(genere) {
+            this.newGenere = genere;
+            console.log(this.newGenere);
+        }
     }
-    
+
 }
 </script>
 
 <style lang="scss" scoped>
 
     .dischi {
-        
+
         height: calc(100vh - 75px);
         margin-top: 75px;
         overflow-y: auto;
@@ -62,6 +85,11 @@ export default {
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
+    }
+    .select {
+        position: absolute;
+        top: 0;
+        right: 20px;
     }
 
 </style>

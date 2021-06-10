@@ -6,13 +6,15 @@
 
 <script>
 export default {
-    name: 'Header'
+    name: 'Header',
 }
 </script>
 
 <style lang="scss" scoped>
 
     header {
+        display: flex;
+        justify-content: space-between;
         position: fixed;
         top: 0;
         left: 0;
